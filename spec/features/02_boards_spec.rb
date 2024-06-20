@@ -8,18 +8,18 @@ describe "/boards" do
     the_user.save
 
     visit "/users/sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: the_user.email
       fill_in "Password", with: the_user.password
       click_button "Log in"
     end
-    
+
     board_chi = Board.new
     board_chi.name = "Chicago"
     board_chi.user_id = the_user.id
     board_chi.save
-    
+
     visit "/boards"
 
     expect(page).to have_text(board_chi.name),
@@ -35,7 +35,7 @@ describe "/boards" do
     the_user.save
 
     visit "/users/sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: the_user.email
       fill_in "Password", with: the_user.password
@@ -56,7 +56,7 @@ describe "/boards" do
     the_user.save
 
     visit "/users/sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: the_user.email
       fill_in "Password", with: the_user.password
@@ -77,7 +77,7 @@ describe "/boards" do
     the_user.save
 
     visit "/users/sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: the_user.email
       fill_in "Password", with: the_user.password
@@ -89,7 +89,7 @@ describe "/boards" do
 
     visit "/boards"
 
-    fill_in "Name", with: "Chicago"
+    fill_in "Name", with: test_name
     click_on "Add board"
     final_number_of_boards = Board.count
     expect(final_number_of_boards).to eq(initial_number_of_boards + 1)
@@ -104,13 +104,13 @@ describe "/boards/[ID]" do
     the_user.save
 
     visit "/users/sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: the_user.email
       fill_in "Password", with: the_user.password
       click_button "Log in"
     end
-    
+
     board_chi = Board.new
     board_chi.name = "Chicago"
     board_chi.user_id = the_user.id
@@ -125,7 +125,7 @@ describe "/boards/[ID]" do
     post_1.save
 
     visit "/boards/#{board_chi.id}"
-    
-    expect(page).to have_tag("a", :text => /Delete post/i)
+
+    expect(page).to have_tag("a", text: /Delete post/i)
   end
 end
